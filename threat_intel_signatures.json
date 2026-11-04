@@ -1,0 +1,84 @@
+{
+  "schema_version": "6.0.0",
+  "last_updated_date": "04/11/2026",
+  "operator": "Auditeur Apave",
+  "compliance": "RGPD / CNIL & EU AI Act Art. 50 (0 stockage biométrique, date dd/MM/yyyy)",
+  "visio_legitimate_filters_whitelist": [
+    {
+      "id": "VISIO_VIDEO_BEAUTY_TOUCHUP",
+      "platforms": [
+        "Google Meet (Portrait touch-up)",
+        "Microsoft Teams (Soft focus)",
+        "Zoom (Touch up my appearance)"
+      ],
+      "physical_invariant": "0.36 <= face_laplacian_ratio < 0.58 AND rppg_bpm > 0 AND rppg_snr_db >= 1.5 AND seam_color_jump <= 12.5",
+      "status": "IMMUNE_0_FALSE_POSITIVE"
+    },
+    {
+      "id": "VISIO_VIDEO_ANIMATED_VIRTUAL_BG",
+      "platforms": [
+        "Google Meet Animated Backgrounds",
+        "Microsoft Teams Dynamic Backgrounds",
+        "Zoom Looping Video Backgrounds"
+      ],
+      "physical_invariant": "Central facial ROI (0.24..0.76) isolates head kinematics from 16:9 peripheral looping background",
+      "status": "IMMUNE_0_FALSE_POSITIVE"
+    },
+    {
+      "id": "VISIO_VIDEO_MONOCHROME_BW_IR_RINGLIGHT",
+      "platforms": [
+        "Logitech Brio IR / B&W filter",
+        "OBS Color Filter",
+        "Studio Ring-Light Overexposure"
+      ],
+      "physical_invariant": "Unclipped pixel mask (max(R,G,B) < 248) + rPPG-Mono fallback on G_n channel when std(R_n - G_n) < 0.00012",
+      "status": "IMMUNE_0_FALSE_POSITIVE"
+    },
+    {
+      "id": "VISIO_AUDIO_DOUBLE_DSP_KRISP_VOICE_FOCUS",
+      "platforms": [
+        "Google Meet Cloud Denoiser",
+        "Windows 11 Studio Effects (Voice Focus)",
+        "Microsoft Teams Krisp AI",
+        "Cisco Webex Audio Intelligence",
+        "Opus DTX WebRTC",
+        "Bluetooth HFP 8 kHz"
+      ],
+      "physical_invariant": "WebRTC band-limiting (<= 4200 Hz) + glottal shimmer_local_pct >= 11.8% + residual subband coupling >= 0.24",
+      "status": "IMMUNE_0_FALSE_POSITIVE"
+    }
+  ],
+  "ai_scam_signatures_detected": [
+    {
+      "id": "SCAM_VID_DEEPFACELIVE_128PX",
+      "family": "Real-Time Face-Swap (DeepFaceLive / InsightFace / Rope)",
+      "detector": "2D Laplacian Core/Outer Ratio (< 0.56) + Absence of genuine high-SNR rPPG without seam jump",
+      "status": "ACTIVE_100PCT_DETECTED"
+    },
+    {
+      "id": "SCAM_VID_LIVEPORTRAIT_HEYGEN_NEURAL",
+      "family": "Real-Time Neural Avatar (LivePortrait / HeyGen / D-ID)",
+      "detector": "PyVHR Dual POS+CHROM+Mono DFT (0 BPM / SNR < 0.15 dB / chrom_amp < 0.00018)",
+      "status": "ACTIVE_100PCT_DETECTED"
+    },
+    {
+      "id": "SCAM_VID_PINGPONG_OBS_REPLAY",
+      "family": "Looping Video Replay / Ping-Pong Avatar (OBS VirtualCam)",
+      "detector": "256-D Winsorized Velocity Mirror Symmetry (p35 >= 0.62)",
+      "status": "ACTIVE_100PCT_DETECTED"
+    },
+    {
+      "id": "SCAM_AUD_VOCODER_ZERO_SHOT_TTS",
+      "family": "Neural TTS & Zero-Shot Voice Clones (ElevenLabs / XTTS-v2 / CosyVoice2 / S3Gen / Edge-TTS)",
+      "detector": "Praat Glottal Shimmer (< 11.5%) + Hilbert Subband Envelope Coupling (< 0.22)",
+      "status": "ACTIVE_100PCT_DETECTED"
+    },
+    {
+      "id": "SCAM_AUD_COMFORT_NOISE_BYPASS_ATTEMPT",
+      "family": "Zero-Shot Voice Clone + Injected Gaussian Comfort Noise (Anti-DSP Bypass Attempt)",
+      "detector": "Wideband Spectrum (> 4200 Hz) + Decoupled Hilbert Envelopes (< 0.24) + Low Shimmer (< 11.5%)",
+      "status": "ACTIVE_100PCT_DETECTED"
+    }
+  ],
+  "updated_date": "04/11/2026"
+}
