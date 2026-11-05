@@ -1,6 +1,6 @@
 {
   "schema_version": "6.0.0",
-  "last_updated_date": "04/11/2026",
+  "last_updated_date": "05/11/2026",
   "operator": "Auditeur Apave",
   "compliance": "RGPD / CNIL & EU AI Act Art. 50 (0 stockage biométrique, date dd/MM/yyyy)",
   "visio_legitimate_filters_whitelist": [
@@ -80,5 +80,5 @@
       "status": "ACTIVE_100PCT_DETECTED"
     }
   ],
-  "updated_date": "04/11/2026"
+  "updated_date": "05/11/2026"
 }
